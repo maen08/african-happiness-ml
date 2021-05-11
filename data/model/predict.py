@@ -1,6 +1,7 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn
+from sklearn.feature_selection import f_regression
 
 
 
@@ -26,13 +27,21 @@ africa = data[africa_data]
 y = africa['Happiness Scores']
 x = africa[['Generosity', 'Perceptions of Corruption','Social Support', 'Healthy Life Expectancy', 'Regional Indicator']]
     
-
-# ys = y.value.reshape(-1,1)
+# 2d in 1d for plot
 x_matrix = x.iloc[:,0].values
 
 plt.scatter(x_matrix,y)
-plt.show()
+# plt.show()
 
 
+
+Gen = africa.sort_values(by=['Generosity'], ascending=False).head()
+# print(Gen)
+
+
+X = x.values.reshape(-1,1)
+p_values = f_regression(X, y)[1]
+
+print(p_values)
 # print(x)
 # print(z)
